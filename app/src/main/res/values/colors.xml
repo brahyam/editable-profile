@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorProfilePictureOverlay">#5000</color>
+    <color name="colorProfileTitleText">#FFF</color>
+    <!--<color name="editProfilePictureButton">@android:color/transparent</color>-->
+    <color name="editProfilePictureButton">#5000</color>
+    <color name="colorEditProfilePictureButton">#FFF</color>
+    <color name="colorProfileAttributeText">#000</color>
+    <color name="colorProfileSeparator">#F5F5F5</color>
 </resources>

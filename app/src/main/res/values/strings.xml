@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Editable Profile</string>
+    <string name="dummy_display_name">Brahyam Meneses</string>
+    <string name="profile_picture_description">User profile picture</string>
+    <string name="edit">Edit</string>
+    <string name="dummy_user_age">27 years old</string>
+    <string name="dummy_location">From Caracas, VE</string>
+    <string name="dummy_religion">Christian</string>
+    <string name="dummy_ethnicity">Latino</string>
+    <string name="dummy_gender">Male</string>
+    <string name="dummy_height">174 cm tall</string>
+    <string name="dummy_figure">Fit</string>
+    <string name="about_me">About me</string>
+    <string name="dummy_about_me">Fusce id sagittis mauris, id convallis sem. Suspendisse id rutrum libero. Duis quis purus dictum, rutrum diam vitae, blandit ante. In vitae nisl sodales, mattis dolor a, laoreet libero. Ut ornare commodo sem, et vestibulum nibh bibendum vestibulum. Mauris faucibus urna lacus. Curabitur consectetur nunc sed massa cursus, aliquam interdum ex egestas. Duis vitae euismod est.</string>
+    <string name="tall">tall</string>
+    <string name="years_old">years old</string>
+    <string name="error_loading_profile">We\'re sorry. There was an error loading the profile</string>
 </resources>

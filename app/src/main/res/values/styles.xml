@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ProfileAttributeText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/profile_attribute_text</item>
+        <item name="android:textColor">@color/colorProfileAttributeText</item>
+        <item name="android:drawablePadding">@dimen/element_default_half_margin</item>
+        <item name="android:layout_marginStart">@dimen/element_default_margin</item>
+        <item name="android:layout_marginEnd">@dimen/element_default_margin</item>
+        <item name="android:layout_marginTop">@dimen/element_default_margin</item>
+    </style>
+
 </resources>
