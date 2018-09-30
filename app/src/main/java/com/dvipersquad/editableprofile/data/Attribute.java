@@ -17,7 +17,7 @@ public class Attribute {
     public static final String TYPE_DISPLAY_NAME = "DisplayName";
     public static final String TYPE_BIRTHDAY = "Birthday";
     public static final String TYPE_LOCATION = "Location";
-    public static final String TYPE_OCUPATION = "Ocupation";
+    public static final String TYPE_OCCUPATION = "Occupation";
     public static final String TYPE_ABOUT_ME = "AboutMe";
 
     @PrimaryKey

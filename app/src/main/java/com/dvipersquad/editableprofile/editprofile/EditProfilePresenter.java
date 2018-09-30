@@ -12,6 +12,7 @@ import com.dvipersquad.editableprofile.data.source.CitiesRepository;
 import com.dvipersquad.editableprofile.data.source.ProfilesDataSource;
 import com.dvipersquad.editableprofile.data.source.ProfilesRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -22,6 +23,8 @@ import javax.inject.Inject;
 
 public class EditProfilePresenter implements EditProfileContract.Presenter {
 
+    private static final int DEFAULT_CHARACTER_LIMIT = 256;
+    private static final int LARGE_CHARACTER_LIMIT = 5000;
     private ProfilesRepository profilesRepository;
     private CitiesRepository citiesRepository;
     private AttributesRepository attributesRepository;
@@ -99,10 +102,25 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
         }
         switch (attributeType) {
             case Attribute.TYPE_DISPLAY_NAME:
+                editProfileView.showEditFreeTextUI(
+                        new Attribute("", activeProfile.getDisplayName(), Attribute.TYPE_DISPLAY_NAME),
+                        DEFAULT_CHARACTER_LIMIT,
+                        true);
+                break;
             case Attribute.TYPE_REAL_NAME:
-            case Attribute.TYPE_OCUPATION:
+                editProfileView.showEditFreeTextUI(
+                        new Attribute("", activeProfile.getRealName(), Attribute.TYPE_REAL_NAME),
+                        DEFAULT_CHARACTER_LIMIT,
+                        true);
+                break;
+            case Attribute.TYPE_OCCUPATION:
+                editProfileView.showEditFreeTextUI(
+                        new Attribute("", activeProfile.getOccupation(), Attribute.TYPE_OCCUPATION),
+                        DEFAULT_CHARACTER_LIMIT,
+                        true);
                 break;
             case Attribute.TYPE_BIRTHDAY:
+                editProfileView.showEditDateUI(activeProfile.getBirthday());
                 break;
             case Attribute.TYPE_ETHNICITY:
             case Attribute.TYPE_RELIGION:
@@ -114,10 +132,32 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
                 showSingleChoiceUI(attributeType, true);
                 break;
             case Attribute.TYPE_ABOUT_ME:
+                editProfileView.showEditFreeTextUI(
+                        new Attribute("", activeProfile.getAboutMe(), Attribute.TYPE_ABOUT_ME),
+                        LARGE_CHARACTER_LIMIT,
+                        false);
                 break;
             case Attribute.TYPE_LOCATION:
+                showEditLocationUI();
                 break;
         }
+    }
+
+    private void showEditLocationUI() {
+        if (editProfileView == null || !editProfileView.isActive()) {
+            return;
+        }
+        citiesRepository.getCities(new CitiesDataSource.GetCitiesCallback() {
+            @Override
+            public void onCitiesLoaded(List<City> cities) {
+                editProfileView.showEditLocationUI(cities, activeCity);
+            }
+
+            @Override
+            public void onDataNotAvailable(String message) {
+                editProfileView.showErrorMessage(message);
+            }
+        });
     }
 
     private void showSingleChoiceUI(final String attributeType, boolean mandatory) {
@@ -150,7 +190,7 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
             case Attribute.TYPE_REAL_NAME:
                 activeProfile.setRealName(attribute.getName());
                 break;
-            case Attribute.TYPE_OCUPATION:
+            case Attribute.TYPE_OCCUPATION:
                 activeProfile.setOccupation(attribute.getName());
                 break;
 //            Handled on method selectedDate
@@ -185,12 +225,25 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
 
     @Override
     public void dateSelected(Date date) {
-
+        if (editProfileView == null) {
+            return;
+        }
+        activeProfile.setBirthday(date);
+        profilesRepository.updateProfile(activeProfile, null);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        String dateString = format.format(date);
+        editProfileView.showAttributes(Collections.singletonList(new Attribute("1", dateString, Attribute.TYPE_BIRTHDAY)));
     }
 
     @Override
     public void locationSelected(City city) {
-
+        if (editProfileView == null) {
+            return;
+        }
+        activeProfile.getLocation().setLatitudeDMS(city.getLatitude());
+        activeProfile.getLocation().setLongitudeDMS(city.getLongitude());
+        profilesRepository.updateProfile(activeProfile, null);
+        editProfileView.showCity(city.getName());
     }
 
     private void loadProfile() {

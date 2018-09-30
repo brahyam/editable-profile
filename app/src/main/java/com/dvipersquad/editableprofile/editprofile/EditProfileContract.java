@@ -31,7 +31,7 @@ public interface EditProfileContract {
 
         void showEditFreeTextUI(Attribute attribute, int limit, boolean mandatory);
 
-        void showEditLocationUI(City currentValue);
+        void showEditLocationUI(List<City> cities, City currentCity);
 
         boolean isActive();
     }

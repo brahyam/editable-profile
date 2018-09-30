@@ -50,4 +50,9 @@ public class City {
     public void setLongitude(@NonNull String longitude) {
         this.longitude = longitude;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

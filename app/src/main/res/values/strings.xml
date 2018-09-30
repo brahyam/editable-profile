@@ -35,4 +35,10 @@
     <string name="dummy_occupation">Engineer</string>
     <string name="mandatory_fields">All fields with * are mandatory</string>
     <string name="choose_an_option">Choose an option</string>
+    <string name="autocomplete_list_selection_error">Please select a city from the suggestion list</string>
+    <string name="select_city">Select your location</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="dummy_char_count">0/0</string>
+    <string name="mandatory_field_error">This field is mandatory and cannot be empty</string>
 </resources>

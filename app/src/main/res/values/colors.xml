@@ -13,4 +13,5 @@
     <color name="colorEditProfileLabelText">#000</color>
     <color name="colorEditProfileValueText">#828282</color>
     <color name="editProfileValueButtonBackground">@android:color/transparent</color>
+    <color name="colorAlertText">#D30C47</color>
 </resources>
