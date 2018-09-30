@@ -1,7 +1,6 @@
 package com.dvipersquad.editableprofile.profile;
 
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.dvipersquad.editableprofile.data.Attribute;
@@ -133,7 +132,6 @@ final class ProfilePresenter implements ProfileContract.Presenter {
                             attributesRepository.getAttribute(profile.getGenderId(), getAttributeCallback);
                             attributesRepository.getAttribute(profile.getEthnicityId(), getAttributeCallback);
                             attributesRepository.getAttribute(profile.getReligionId(), getAttributeCallback);
-                            attributesRepository.getAttribute(profile.getMaritalStatusId(), getAttributeCallback);
                             attributesRepository.getAttribute(profile.getFigureId(), getAttributeCallback);
                         }
 
@@ -167,8 +165,11 @@ final class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void openEditProfile(@NonNull Profile profile) {
-
+    public void openEditProfile() {
+        if (profileView == null || !profileView.isActive()) {
+            return;
+        }
+        profileView.showEditProfileUI(profileId);
     }
 
     @Override

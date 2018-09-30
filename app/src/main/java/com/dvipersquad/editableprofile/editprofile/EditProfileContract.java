@@ -1,4 +1,4 @@
-package com.dvipersquad.editableprofile.profile;
+package com.dvipersquad.editableprofile.editprofile;
 
 import com.dvipersquad.editableprofile.BasePresenter;
 import com.dvipersquad.editableprofile.BaseView;
@@ -7,10 +7,7 @@ import com.dvipersquad.editableprofile.data.Profile;
 
 import java.util.List;
 
-/**
- * Specifies the contract between the view and the presenter
- */
-public interface ProfileContract {
+public class EditProfileContract {
 
     interface View extends BaseView<Presenter> {
 
@@ -18,26 +15,23 @@ public interface ProfileContract {
 
         void showProfile(Profile profile);
 
-        void showCity(String cityName);
-
         void showAttributes(List<Attribute> attributes);
+
+        void showCity(String cityName);
 
         void showMissingProfile();
 
         void showErrorMessage(String message);
-
-        void showEditProfileUI(String profileId);
 
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter<View> {
 
-        void takeView(ProfileContract.View profileFragment);
-
-        void openEditProfile();
+        void takeView(EditProfileContract.View profileFragment);
 
         void dropView();
+
     }
 
 }

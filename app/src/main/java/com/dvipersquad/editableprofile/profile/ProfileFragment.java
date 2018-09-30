@@ -1,11 +1,15 @@
 package com.dvipersquad.editableprofile.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import com.dvipersquad.editableprofile.R;
 import com.dvipersquad.editableprofile.data.Attribute;
 import com.dvipersquad.editableprofile.data.Profile;
 import com.dvipersquad.editableprofile.di.ActivityScoped;
+import com.dvipersquad.editableprofile.editprofile.EditProfileActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -54,13 +59,18 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     TextView txtProfileReligion;
     TextView txtProfileEthnicity;
     TextView txtProfileFigure;
-    TextView txtProfileMaritalStatus;
     TextView txtProfileAboutMe;
 
     Button btnEditProfilePicture;
 
     @Inject
     public ProfileFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -89,11 +99,28 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
         txtProfileReligion = root.findViewById(R.id.txtProfileReligion);
         txtProfileEthnicity = root.findViewById(R.id.txtProfileEthnicity);
         txtProfileFigure = root.findViewById(R.id.txtProfileFigure);
-        txtProfileMaritalStatus = root.findViewById(R.id.txtProfileMaritalStatus);
         txtProfileAboutMe = root.findViewById(R.id.txtProfileAboutMe);
 
         btnEditProfilePicture = root.findViewById(R.id.btnEditProfilePicture);
+
+
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.profile_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemEditProfile:
+                presenter.openEditProfile();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -107,7 +134,6 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
             txtProfileReligion.setText(ELLIPSIS);
             txtProfileEthnicity.setText(ELLIPSIS);
             txtProfileFigure.setText(ELLIPSIS);
-            txtProfileMaritalStatus.setText(ELLIPSIS);
             txtProfileAboutMe.setText(ELLIPSIS);
             btnEditProfilePicture.setEnabled(false);
         } else {
@@ -124,7 +150,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
         btnEditProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.openEditProfile(profile);
+                presenter.openEditProfile();
             }
         });
 
@@ -154,9 +180,6 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
                     break;
                 case Attribute.TYPE_RELIGION:
                     txtProfileReligion.setText(attribute.getName());
-                    break;
-                case Attribute.TYPE_MARITAL_STATUS:
-                    txtProfileMaritalStatus.setText(attribute.getName());
                     break;
                 case Attribute.TYPE_FIGURE:
                     txtProfileFigure.setText(attribute.getName());
@@ -193,7 +216,9 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
 
     @Override
     public void showEditProfileUI(String profileId) {
-        // Call Edit Activity
+        Intent intent = new Intent(getContext(), EditProfileActivity.class);
+        intent.putExtra(EditProfileActivity.EXTRA_PROFILE_ID, profileId);
+        startActivity(intent);
     }
 
     @Override

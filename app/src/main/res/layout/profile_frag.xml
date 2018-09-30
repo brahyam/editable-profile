@@ -99,18 +99,6 @@
             app:layout_constraintTop_toBottomOf="@id/txtProfileAge" />
 
         <TextView
-            android:id="@+id/txtProfileMaritalStatus"
-            style="@style/ProfileAttributeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_people_black_24dp"
-            android:text="@string/dummy_marital_status"
-            app:layout_constraintBaseline_toBaselineOf="@id/txtProfileGender"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline" />
-
-        <TextView
             android:id="@+id/txtProfileReligion"
             style="@style/ProfileAttributeText"
             android:layout_width="wrap_content"

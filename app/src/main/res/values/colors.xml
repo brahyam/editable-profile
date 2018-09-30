@@ -5,9 +5,12 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorProfilePictureOverlay">#5000</color>
     <color name="colorProfileTitleText">#FFF</color>
-    <!--<color name="editProfilePictureButton">@android:color/transparent</color>-->
     <color name="editProfilePictureButton">#5000</color>
     <color name="colorEditProfilePictureButton">#FFF</color>
     <color name="colorProfileAttributeText">#000</color>
     <color name="colorProfileSeparator">#F5F5F5</color>
+    <color name="colorEditProfileLabelBackground">#F5F5F5</color>
+    <color name="colorEditProfileLabelText">#000</color>
+    <color name="colorEditProfileValueText">#828282</color>
+    <color name="editProfileValueButtonBackground">@android:color/transparent</color>
 </resources>

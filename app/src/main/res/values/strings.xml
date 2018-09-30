@@ -17,4 +17,21 @@
     <string name="error_loading_profile">We\'re sorry. There was an error loading the profile</string>
     <string name="from">From</string>
     <string name="dummy_marital_status">Widower</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="real_name_label">Real Name *</string>
+    <string name="display_name_label">Display Name *</string>
+    <string name="gender_label">Gender *</string>
+    <string name="height">Height</string>
+    <string name="dummy_edit_height">174 cm</string>
+    <string name="birthday_label">Birthday *</string>
+    <string name="dummy_birthday">30.12.1990</string>
+    <string name="location_label">Location *</string>
+    <string name="dummy_edit_location">Caracas</string>
+    <string name="marital_status_label">Marital Status *</string>
+    <string name="religion">Religion</string>
+    <string name="ethnicity">Ethnicity</string>
+    <string name="figure">Figure</string>
+    <string name="occupation">Occupation</string>
+    <string name="dummy_occupation">Engineer</string>
+    <string name="mandatory_fields">All fields with * are mandatory</string>
 </resources>
