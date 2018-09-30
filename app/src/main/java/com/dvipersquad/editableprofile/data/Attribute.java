@@ -6,12 +6,19 @@ import android.support.annotation.NonNull;
 
 @Entity(tableName = "attributes")
 public class Attribute {
-
+    // Single Choice
     public static final String TYPE_GENDER = "Gender";
     public static final String TYPE_ETHNICITY = "Ethnicity";
     public static final String TYPE_RELIGION = "Religion";
     public static final String TYPE_FIGURE = "Figure";
     public static final String TYPE_MARITAL_STATUS = "MaritalStatus";
+    // Not Single Choice
+    public static final String TYPE_REAL_NAME = "RealName";
+    public static final String TYPE_DISPLAY_NAME = "DisplayName";
+    public static final String TYPE_BIRTHDAY = "Birthday";
+    public static final String TYPE_LOCATION = "Location";
+    public static final String TYPE_OCUPATION = "Ocupation";
+    public static final String TYPE_ABOUT_ME = "AboutMe";
 
     @PrimaryKey
     @NonNull

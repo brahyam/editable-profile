@@ -34,4 +34,5 @@
     <string name="occupation">Occupation</string>
     <string name="dummy_occupation">Engineer</string>
     <string name="mandatory_fields">All fields with * are mandatory</string>
+    <string name="choose_an_option">Choose an option</string>
 </resources>

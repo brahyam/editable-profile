@@ -1,9 +1,11 @@
 package com.dvipersquad.editableprofile.editprofile;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +14,12 @@ import android.widget.TextView;
 
 import com.dvipersquad.editableprofile.R;
 import com.dvipersquad.editableprofile.data.Attribute;
+import com.dvipersquad.editableprofile.data.City;
 import com.dvipersquad.editableprofile.data.Profile;
 import com.dvipersquad.editableprofile.di.ActivityScoped;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,17 +34,17 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
     private static final String ELLIPSIS = "...";
 
     private TextView txtEditProfileInfo;
-    private Button txtEditProfileRealName;
-    private Button txtEditProfileDisplayName;
-    private Button txtEditProfileGender;
-    private Button txtEditProfileBirthday;
-    private Button txtEditProfileLocation;
-    private Button txtEditProfileMaritalStatus;
-    private Button txtEditProfileReligion;
-    private Button txtEditProfileEthnicity;
-    private Button txtEditProfileFigure;
-    private Button txtEditProfileOccupation;
-    private Button txtEditProfileAboutMe;
+    private Button btnEditProfileRealName;
+    private Button btnEditProfileDisplayName;
+    private Button btnEditProfileGender;
+    private Button btnEditProfileBirthday;
+    private Button btnEditProfileLocation;
+    private Button btnEditProfileMaritalStatus;
+    private Button btnEditProfileReligion;
+    private Button btnEditProfileEthnicity;
+    private Button btnEditProfileFigure;
+    private Button btnEditProfileOccupation;
+    private Button btnEditProfileAboutMe;
 
     @Inject
     @Nullable
@@ -71,64 +75,102 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
         View rootView = inflater.inflate(R.layout.editprofile_frag, container, false);
 
         txtEditProfileInfo = rootView.findViewById(R.id.txtEditProfileInfo);
-        txtEditProfileRealName = rootView.findViewById(R.id.txtEditProfileRealName);
-        txtEditProfileDisplayName = rootView.findViewById(R.id.txtEditProfileDisplayName);
-        txtEditProfileGender = rootView.findViewById(R.id.txtEditProfileGender);
-        txtEditProfileBirthday = rootView.findViewById(R.id.txtEditProfileBirthday);
-        txtEditProfileLocation = rootView.findViewById(R.id.txtEditProfileLocation);
-        txtEditProfileMaritalStatus = rootView.findViewById(R.id.txtEditProfileMaritalStatus);
-        txtEditProfileReligion = rootView.findViewById(R.id.txtEditProfileReligion);
-        txtEditProfileEthnicity = rootView.findViewById(R.id.txtEditProfileEthnicity);
-        txtEditProfileFigure = rootView.findViewById(R.id.txtEditProfileFigure);
-        txtEditProfileOccupation = rootView.findViewById(R.id.txtEditProfileOccupation);
-        txtEditProfileAboutMe = rootView.findViewById(R.id.txtEditProfileAboutMe);
 
+        btnEditProfileRealName = rootView.findViewById(R.id.btnEditProfileRealName);
+        btnEditProfileRealName.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_REAL_NAME));
+        btnEditProfileDisplayName = rootView.findViewById(R.id.btnEditProfileDisplayName);
+        btnEditProfileDisplayName.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_DISPLAY_NAME));
+        btnEditProfileGender = rootView.findViewById(R.id.btnEditProfileGender);
+        btnEditProfileGender.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_GENDER));
+        btnEditProfileBirthday = rootView.findViewById(R.id.btnEditProfileBirthday);
+        btnEditProfileBirthday.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_BIRTHDAY));
+        btnEditProfileLocation = rootView.findViewById(R.id.btnEditProfileLocation);
+        btnEditProfileLocation.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_LOCATION));
+        btnEditProfileMaritalStatus = rootView.findViewById(R.id.btnEditProfileMaritalStatus);
+        btnEditProfileMaritalStatus.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_MARITAL_STATUS));
+        btnEditProfileReligion = rootView.findViewById(R.id.btnEditProfileReligion);
+        btnEditProfileReligion.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_RELIGION));
+        btnEditProfileEthnicity = rootView.findViewById(R.id.btnEditProfileEthnicity);
+        btnEditProfileEthnicity.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_ETHNICITY));
+        btnEditProfileFigure = rootView.findViewById(R.id.btnEditProfileFigure);
+        btnEditProfileFigure.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_FIGURE));
+        btnEditProfileOccupation = rootView.findViewById(R.id.btnEditProfileOccupation);
+        btnEditProfileOccupation.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_OCUPATION));
+        btnEditProfileAboutMe = rootView.findViewById(R.id.btnEditProfileAboutMe);
+        btnEditProfileAboutMe.setOnClickListener(getOnClickListenerForType(Attribute.TYPE_ABOUT_ME));
         return rootView;
+    }
+
+    private View.OnClickListener getOnClickListenerForType(final String attributeType) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.modifyField(attributeType);
+            }
+        };
     }
 
     @Override
     public void setLoadingIndicator(boolean active) {
-        txtEditProfileRealName.setText(ELLIPSIS);
-        txtEditProfileDisplayName.setText(ELLIPSIS);
-        txtEditProfileGender.setText(ELLIPSIS);
-        txtEditProfileBirthday.setText(ELLIPSIS);
-        txtEditProfileLocation.setText(ELLIPSIS);
-        txtEditProfileMaritalStatus.setText(ELLIPSIS);
-        txtEditProfileReligion.setText(ELLIPSIS);
-        txtEditProfileEthnicity.setText(ELLIPSIS);
-        txtEditProfileFigure.setText(ELLIPSIS);
-        txtEditProfileOccupation.setText(ELLIPSIS);
-        txtEditProfileAboutMe.setText(ELLIPSIS);
+        btnEditProfileRealName.setText(ELLIPSIS);
+        btnEditProfileDisplayName.setText(ELLIPSIS);
+        btnEditProfileGender.setText(ELLIPSIS);
+        btnEditProfileBirthday.setText(ELLIPSIS);
+        btnEditProfileLocation.setText(ELLIPSIS);
+        btnEditProfileMaritalStatus.setText(ELLIPSIS);
+        btnEditProfileReligion.setText(ELLIPSIS);
+        btnEditProfileEthnicity.setText(ELLIPSIS);
+        btnEditProfileFigure.setText(ELLIPSIS);
+        btnEditProfileOccupation.setText(ELLIPSIS);
+        btnEditProfileAboutMe.setText(ELLIPSIS);
     }
 
     @Override
     public void showProfile(Profile profile) {
-        txtEditProfileRealName.setText(profile.getRealName());
-        txtEditProfileDisplayName.setText(profile.getDisplayName());
+        btnEditProfileRealName.setText(profile.getRealName());
+        btnEditProfileDisplayName.setText(profile.getDisplayName());
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        txtEditProfileBirthday.setText(format.format(profile.getBirthday()));
-        txtEditProfileOccupation.setText(profile.getOccupation());
-        txtEditProfileAboutMe.setText(profile.getAboutMe());
+        btnEditProfileBirthday.setText(format.format(profile.getBirthday()));
+        btnEditProfileOccupation.setText(profile.getOccupation());
+        btnEditProfileAboutMe.setText(profile.getAboutMe());
     }
 
     @Override
     public void showAttributes(List<Attribute> attributes) {
         for (Attribute attribute : attributes) {
             switch (attribute.getType()) {
+                case Attribute.TYPE_DISPLAY_NAME:
+                    btnEditProfileDisplayName.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_REAL_NAME:
+                    btnEditProfileRealName.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_OCUPATION:
+                    btnEditProfileOccupation.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_BIRTHDAY:
+                    btnEditProfileBirthday.setText(attribute.getName());
+                    break;
                 case Attribute.TYPE_GENDER:
-                    txtEditProfileGender.setText(attribute.getName());
+                    btnEditProfileGender.setText(attribute.getName());
                     break;
                 case Attribute.TYPE_ETHNICITY:
-                    txtEditProfileEthnicity.setText(attribute.getName());
+                    btnEditProfileEthnicity.setText(attribute.getName());
                     break;
                 case Attribute.TYPE_RELIGION:
-                    txtEditProfileReligion.setText(attribute.getName());
+                    btnEditProfileReligion.setText(attribute.getName());
                     break;
                 case Attribute.TYPE_FIGURE:
-                    txtEditProfileFigure.setText(attribute.getName());
+                    btnEditProfileFigure.setText(attribute.getName());
                     break;
                 case Attribute.TYPE_MARITAL_STATUS:
-                    txtEditProfileMaritalStatus.setText(attribute.getName());
+                    btnEditProfileMaritalStatus.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_ABOUT_ME:
+                    btnEditProfileAboutMe.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_LOCATION:
+                    btnEditProfileLocation.setText(attribute.getName());
                     break;
             }
         }
@@ -136,7 +178,7 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
 
     @Override
     public void showCity(String cityName) {
-        txtEditProfileLocation.setText(cityName);
+        btnEditProfileLocation.setText(cityName);
     }
 
     @Override
@@ -149,6 +191,48 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
         if (getView() != null) {
             Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void showEditSingleChoiceUI(final List<Attribute> attributes, Attribute currentValue, boolean mandatory) {
+        if (getActivity() != null && isActive()) {
+            String items[] = new String[attributes.size()];
+            int selected = -1;
+            for (int i = 0; i < attributes.size(); i++) {
+                Attribute attribute = attributes.get(i);
+                items[i] = attributes.get(i).getName();
+                if (attribute.getId().equals(currentValue.getId())) {
+                    selected = i;
+                }
+            }
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+            dialogBuilder.setTitle(getString(R.string.choose_an_option));
+            dialogBuilder.setSingleChoiceItems(items, selected, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    presenter.attributeSelected(attributes.get(i));
+                    dialogInterface.dismiss();
+                }
+            });
+
+            AlertDialog dialog = dialogBuilder.create();
+            dialog.show();
+        }
+    }
+
+    @Override
+    public void showEditDateUI(Date currentValue) {
+
+    }
+
+    @Override
+    public void showEditFreeTextUI(Attribute attribute, int limit, boolean mandatory) {
+
+    }
+
+    @Override
+    public void showEditLocationUI(City currentValue) {
+
     }
 
     @Override

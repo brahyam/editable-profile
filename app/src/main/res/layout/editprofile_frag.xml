@@ -27,7 +27,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtEditProfileInfo" />
 
         <Button
-            android:id="@+id/txtEditProfileRealName"
+            android:id="@+id/btnEditProfileRealName"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,10 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/display_name_label"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileRealName" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileRealName" />
 
         <Button
-            android:id="@+id/txtEditProfileDisplayName"
+            android:id="@+id/btnEditProfileDisplayName"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,10 +56,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gender_label"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileDisplayName" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileDisplayName" />
 
         <Button
-            android:id="@+id/txtEditProfileGender"
+            android:id="@+id/btnEditProfileGender"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,10 +72,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/height"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileGender" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileGender" />
 
         <Button
-            android:id="@+id/txtEditProfileHeight"
+            android:id="@+id/btnEditProfileHeight"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,10 +90,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/birthday_label"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileHeight" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileHeight" />
 
         <Button
-            android:id="@+id/txtEditProfileBirthday"
+            android:id="@+id/btnEditProfileBirthday"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,10 +106,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/location_label"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileBirthday" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileBirthday" />
 
         <Button
-            android:id="@+id/txtEditProfileLocation"
+            android:id="@+id/btnEditProfileLocation"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,10 +122,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/marital_status_label"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileLocation" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileLocation" />
 
         <Button
-            android:id="@+id/txtEditProfileMaritalStatus"
+            android:id="@+id/btnEditProfileMaritalStatus"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,10 +138,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/religion"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileMaritalStatus" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileMaritalStatus" />
 
         <Button
-            android:id="@+id/txtEditProfileReligion"
+            android:id="@+id/btnEditProfileReligion"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,10 +154,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ethnicity"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileReligion" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileReligion" />
 
         <Button
-            android:id="@+id/txtEditProfileEthnicity"
+            android:id="@+id/btnEditProfileEthnicity"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,10 +170,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/figure"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileEthnicity" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileEthnicity" />
 
         <Button
-            android:id="@+id/txtEditProfileFigure"
+            android:id="@+id/btnEditProfileFigure"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,10 +186,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/occupation"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileFigure" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileFigure" />
 
         <Button
-            android:id="@+id/txtEditProfileOccupation"
+            android:id="@+id/btnEditProfileOccupation"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -202,10 +202,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_me"
-            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileOccupation" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileOccupation" />
 
         <Button
-            android:id="@+id/txtEditProfileAboutMe"
+            android:id="@+id/btnEditProfileAboutMe"
             style="@style/EditProfileValueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

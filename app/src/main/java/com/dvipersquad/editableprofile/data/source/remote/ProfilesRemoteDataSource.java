@@ -8,8 +8,12 @@ import com.dvipersquad.editableprofile.BuildConfig;
 import com.dvipersquad.editableprofile.data.Profile;
 import com.dvipersquad.editableprofile.data.source.ProfilesDataSource;
 
+import java.util.List;
+
 import javax.inject.Singleton;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,9 +33,19 @@ public class ProfilesRemoteDataSource implements ProfilesDataSource {
     private ProfilesApi profilesApi;
 
     public ProfilesRemoteDataSource() {
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
                 .build();
 
         profilesApi = retrofit.create(ProfilesApi.class);
@@ -65,9 +79,30 @@ public class ProfilesRemoteDataSource implements ProfilesDataSource {
     }
 
     @Override
-    public void updateProfile(@NonNull Profile profile, @Nullable ModifyProfileCallback callback) {
-        Call<Profile> call = profilesApi.updateProfile(profile);
-        executeProfileModificationCall(call, callback);
+    public void updateProfile(@NonNull Profile profile, @Nullable final ModifyProfileCallback callback) {
+        Call<List<Profile>> call = profilesApi.updateProfile(profile);
+        call.enqueue(new Callback<List<Profile>>() {
+            @Override
+            public void onResponse(Call<List<Profile>> call, Response<List<Profile>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (callback != null) {
+                        callback.onProfileModified(response.body().get(0));
+                    }
+                } else {
+                    if (callback != null) {
+                        callback.onOperationFailed(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Profile>> call, Throwable t) {
+                Log.e(TAG, call.request().method() + " profile call failed:" + t.getMessage());
+                if (callback != null) {
+                    callback.onOperationFailed(t.getLocalizedMessage());
+                }
+            }
+        });
     }
 
     @Override
@@ -109,15 +144,9 @@ public class ProfilesRemoteDataSource implements ProfilesDataSource {
         Call<Profile> saveProfile(@Body Profile profile);
 
         @PATCH("profiles")
-        Call<Profile> updateProfile(@Body Profile profile);
+        Call<List<Profile>> updateProfile(@Body Profile profile);
 
         @DELETE("profiles/{id}")
         Call<Profile> deleteProfile(@Path("id") String profileId);
-
-        @GET("cities.json")
-        Call<CitiesApiResponse> getCities();
-
-        @GET("single_choice_attributes.json")
-        Call<AttributesApiResponse> getAttributes();
     }
 }

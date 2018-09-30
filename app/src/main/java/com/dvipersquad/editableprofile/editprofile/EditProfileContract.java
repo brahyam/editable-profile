@@ -3,11 +3,13 @@ package com.dvipersquad.editableprofile.editprofile;
 import com.dvipersquad.editableprofile.BasePresenter;
 import com.dvipersquad.editableprofile.BaseView;
 import com.dvipersquad.editableprofile.data.Attribute;
+import com.dvipersquad.editableprofile.data.City;
 import com.dvipersquad.editableprofile.data.Profile;
 
+import java.util.Date;
 import java.util.List;
 
-public class EditProfileContract {
+public interface EditProfileContract {
 
     interface View extends BaseView<Presenter> {
 
@@ -23,12 +25,28 @@ public class EditProfileContract {
 
         void showErrorMessage(String message);
 
+        void showEditSingleChoiceUI(List<Attribute> attributes, Attribute currentValue, boolean mandatory);
+
+        void showEditDateUI(Date currentValue);
+
+        void showEditFreeTextUI(Attribute attribute, int limit, boolean mandatory);
+
+        void showEditLocationUI(City currentValue);
+
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter<View> {
 
         void takeView(EditProfileContract.View profileFragment);
+
+        void modifyField(String attributeType);
+
+        void attributeSelected(Attribute attribute);
+
+        void dateSelected(Date date);
+
+        void locationSelected(City city);
 
         void dropView();
 
