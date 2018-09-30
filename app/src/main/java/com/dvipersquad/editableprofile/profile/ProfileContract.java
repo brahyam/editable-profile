@@ -4,7 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.dvipersquad.editableprofile.BasePresenter;
 import com.dvipersquad.editableprofile.BaseView;
-import com.dvipersquad.editableprofile.data.User;
+import com.dvipersquad.editableprofile.data.Attribute;
+import com.dvipersquad.editableprofile.data.Profile;
+
+import java.util.List;
 
 /**
  * Specifies the contract between the view and the presenter
@@ -15,13 +18,17 @@ public interface ProfileContract {
 
         void setLoadingIndicator(boolean active);
 
-        void showProfile(User user);
+        void showProfile(Profile profile);
 
-        void showLocation(String cityName);
+        void showCity(String cityName);
 
-        void showMissingUser();
+        void showAttributes(List<Attribute> attributes);
 
-        void showEditProfileUI(String userId);
+        void showMissingProfile();
+
+        void showErrorMessage(String message);
+
+        void showEditProfileUI(String profileId);
 
         boolean isActive();
     }
@@ -30,7 +37,7 @@ public interface ProfileContract {
 
         void takeView(ProfileContract.View profileFragment);
 
-        void openEditProfile(@NonNull User user);
+        void openEditProfile(@NonNull Profile profile);
 
         void dropView();
     }

@@ -13,7 +13,7 @@ import dagger.android.support.DaggerAppCompatActivity;
  * Displays profile screen
  */
 public class ProfileActivity extends DaggerAppCompatActivity {
-    public static final String EXTRA_USER_ID = "USER_ID";
+    public static final String EXTRA_PROFILE_ID = "PROFILE_ID";
 
     @Inject
     ProfileFragment injectedProfileFragment;

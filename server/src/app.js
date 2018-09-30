@@ -16,6 +16,8 @@ const services = require('./services');
 const appHooks = require('./app.hooks');
 const channels = require('./channels');
 
+const seedData = require('../config/seed.json');
+
 const app = express(feathers());
 
 // Load app configuration
@@ -46,5 +48,8 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
+
+// Seed Data
+app.service('profiles').create(seedData)
 
 module.exports = app;

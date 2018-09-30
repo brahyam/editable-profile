@@ -1,6 +1,6 @@
 # Editable Profile
 
-> Backend service to store user information
+> Backend service to store profile information
 
 ## About
 

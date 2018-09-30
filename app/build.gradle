@@ -11,6 +11,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            resValue("string", "PORT_NUMBER", "8081")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -34,6 +37,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     // Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"

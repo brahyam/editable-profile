@@ -13,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dvipersquad.editableprofile.R;
-import com.dvipersquad.editableprofile.data.User;
+import com.dvipersquad.editableprofile.data.Attribute;
+import com.dvipersquad.editableprofile.data.Profile;
 import com.dvipersquad.editableprofile.di.ActivityScoped;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -32,11 +34,12 @@ import dagger.android.support.DaggerFragment;
 public class ProfileFragment extends DaggerFragment implements ProfileContract.View {
 
     @NonNull
-    private static final String ARGUMENT_USER_ID = "USER_ID";
+    private static final String ARGUMENT_PROFILE_ID = "PROFILE_ID";
+    private static final String ELLIPSIS = "...";
 
     @Inject
     @Nullable
-    String UserId;
+    String profileId;
 
     @Inject
     ProfileContract.Presenter presenter;
@@ -51,6 +54,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     TextView txtProfileReligion;
     TextView txtProfileEthnicity;
     TextView txtProfileFigure;
+    TextView txtProfileMaritalStatus;
     TextView txtProfileAboutMe;
 
     Button btnEditProfilePicture;
@@ -85,6 +89,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
         txtProfileReligion = root.findViewById(R.id.txtProfileReligion);
         txtProfileEthnicity = root.findViewById(R.id.txtProfileEthnicity);
         txtProfileFigure = root.findViewById(R.id.txtProfileFigure);
+        txtProfileMaritalStatus = root.findViewById(R.id.txtProfileMaritalStatus);
         txtProfileAboutMe = root.findViewById(R.id.txtProfileAboutMe);
 
         btnEditProfilePicture = root.findViewById(R.id.btnEditProfilePicture);
@@ -94,15 +99,16 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     @Override
     public void setLoadingIndicator(boolean active) {
         if (active) {
-            txtProfileDisplayName.setText(null);
-            txtProfileGender.setText(null);
-            txtProfileHeight.setText(null);
-            txtProfileAge.setText(null);
-            txtProfileLocation.setText(null);
-            txtProfileReligion.setText(null);
-            txtProfileEthnicity.setText(null);
-            txtProfileFigure.setText(null);
-            txtProfileAboutMe.setText(null);
+            txtProfileDisplayName.setText(ELLIPSIS);
+            txtProfileGender.setText(ELLIPSIS);
+            txtProfileHeight.setText(ELLIPSIS);
+            txtProfileAge.setText(ELLIPSIS);
+            txtProfileLocation.setText(ELLIPSIS);
+            txtProfileReligion.setText(ELLIPSIS);
+            txtProfileEthnicity.setText(ELLIPSIS);
+            txtProfileFigure.setText(ELLIPSIS);
+            txtProfileMaritalStatus.setText(ELLIPSIS);
+            txtProfileAboutMe.setText(ELLIPSIS);
             btnEditProfilePicture.setEnabled(false);
         } else {
             btnEditProfilePicture.setEnabled(true);
@@ -110,33 +116,53 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     }
 
     @Override
-    public void showProfile(final User user) {
-        txtProfileDisplayName.setText(user.getDisplayName());
-        txtProfileGender.setText(user.getGender());
-        txtProfileHeight.setText(String.format(Locale.getDefault(), "%.0f cms %s", user.getHeight(), getString(R.string.tall)));
-        txtProfileAge.setText(String.format(Locale.getDefault(), "%d %s", getAgeFromDate(user.getBirthday()), getString(R.string.years_old)));
-//        txtProfileLocation.setText(null); Needs to translate coordinates to city
-        txtProfileReligion.setText(user.getReligion());
-        txtProfileEthnicity.setText(user.getEthnicity());
-        txtProfileFigure.setText(user.getFigure());
-        txtProfileAboutMe.setText(user.getAboutMe());
+    public void showProfile(final Profile profile) {
+        txtProfileDisplayName.setText(profile.getDisplayName());
+        txtProfileHeight.setText(String.format(Locale.getDefault(), "%.0f cms %s", profile.getHeight(), getString(R.string.tall)));
+        txtProfileAge.setText(String.format(Locale.getDefault(), "%d %s", getAgeFromDate(profile.getBirthday()), getString(R.string.years_old)));
+        txtProfileAboutMe.setText(profile.getAboutMe());
         btnEditProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.openEditProfile(user);
+                presenter.openEditProfile(profile);
             }
         });
 
-        if (!TextUtils.isEmpty(user.getProfilePictureUrl())) {
+        if (!TextUtils.isEmpty(profile.getProfilePictureUrl())) {
             Picasso.get()
-                    .load(user.getProfilePictureUrl())
+                    .load(profile.getProfilePictureUrl())
+                    .fit()
+                    .centerCrop()
                     .into(imgProfilePicture);
         }
     }
 
     @Override
-    public void showLocation(String cityName) {
-        txtProfileLocation.setText(cityName);
+    public void showCity(String cityName) {
+        txtProfileLocation.setText(String.format(Locale.getDefault(), "%s %s", getString(R.string.from), cityName));
+    }
+
+    @Override
+    public void showAttributes(List<Attribute> attributes) {
+        for (Attribute attribute : attributes) {
+            switch (attribute.getType()) {
+                case Attribute.TYPE_GENDER:
+                    txtProfileGender.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_ETHNICITY:
+                    txtProfileEthnicity.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_RELIGION:
+                    txtProfileReligion.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_MARITAL_STATUS:
+                    txtProfileMaritalStatus.setText(attribute.getName());
+                    break;
+                case Attribute.TYPE_FIGURE:
+                    txtProfileFigure.setText(attribute.getName());
+                    break;
+            }
+        }
     }
 
     private int getAgeFromDate(Date date) {
@@ -154,15 +180,19 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     }
 
     @Override
-    public void showMissingUser() {
-        if (isActive() && getView() != null) {
-            Snackbar.make(getView(), getString(R.string.error_loading_profile), Snackbar.LENGTH_LONG).show();
-        }
+    public void showMissingProfile() {
 
     }
 
     @Override
-    public void showEditProfileUI(String userId) {
+    public void showErrorMessage(String message) {
+        if (isActive() && getView() != null) {
+            Snackbar.make(getView(), getString(R.string.error_loading_profile), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void showEditProfileUI(String profileId) {
         // Call Edit Activity
     }
 

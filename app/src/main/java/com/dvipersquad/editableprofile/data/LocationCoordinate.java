@@ -1,29 +1,42 @@
 package com.dvipersquad.editableprofile.data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LocationCoordinate {
 
-    private double latitude;
+    @SerializedName("lat")
+    private String latitudeDMS;
 
-    private double longitude;
+    @SerializedName("lon")
+    private String longitudeDMS;
 
-    public LocationCoordinate(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public LocationCoordinate(String latitudeDMS, String longitudeDMS) {
+        this.latitudeDMS = latitudeDMS;
+        this.longitudeDMS = longitudeDMS;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getLatitudeDMS() {
+        return latitudeDMS;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLatitudeDMS(String latitudeDMS) {
+        this.latitudeDMS = latitudeDMS;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getLongitudeDMS() {
+        return longitudeDMS;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLongitudeDMS(String longitudeDMS) {
+        this.longitudeDMS = longitudeDMS;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof LocationCoordinate) {
+            return this.getLatitudeDMS().equals(((LocationCoordinate) obj).getLatitudeDMS()) && this.getLongitudeDMS().equals(((LocationCoordinate) obj).getLongitudeDMS());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

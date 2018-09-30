@@ -24,8 +24,8 @@ public abstract class ProfilePresenterModule {
     @Provides
     @ActivityScoped
     @Nullable
-    static String provideUserId(ProfileActivity activity) {
-        return activity.getIntent().getStringExtra(ProfileActivity.EXTRA_USER_ID);
+    static String provideProfileId(ProfileActivity activity) {
+        return activity.getIntent().getStringExtra(ProfileActivity.EXTRA_PROFILE_ID);
     }
 
 }
