@@ -3,9 +3,13 @@ package com.dvipersquad.editableprofile.data.source;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.dvipersquad.editableprofile.data.source.local.AttributesLocalDataSource;
+import com.dvipersquad.editableprofile.data.source.local.CitiesLocalDataSource;
 import com.dvipersquad.editableprofile.data.source.local.ProfilesDao;
 import com.dvipersquad.editableprofile.data.source.local.ProfilesDatabase;
 import com.dvipersquad.editableprofile.data.source.local.ProfilesLocalDataSource;
+import com.dvipersquad.editableprofile.data.source.remote.AttributesRemoteDataSource;
+import com.dvipersquad.editableprofile.data.source.remote.CitiesRemoteDataSource;
 import com.dvipersquad.editableprofile.data.source.remote.ProfilesRemoteDataSource;
 import com.dvipersquad.editableprofile.utils.AppExecutors;
 import com.dvipersquad.editableprofile.utils.DiskIOThreadExecutor;
@@ -36,6 +40,34 @@ public class ProfilesRepositoryModule {
     @Remote
     ProfilesDataSource provideProfilesRemoteDataSource() {
         return new ProfilesRemoteDataSource();
+    }
+
+    @Singleton
+    @Provides
+    @Local
+    CitiesDataSource provideCitiesLocalDataSource(ProfilesDao dao, AppExecutors executors) {
+        return new CitiesLocalDataSource(executors, dao);
+    }
+
+    @Singleton
+    @Provides
+    @Remote
+    CitiesDataSource provideCitiesRemoteDataSource() {
+        return new CitiesRemoteDataSource();
+    }
+
+    @Singleton
+    @Provides
+    @Local
+    AttributesDataSource provideAttributesLocalDataSource(ProfilesDao dao, AppExecutors executors) {
+        return new AttributesLocalDataSource(executors, dao);
+    }
+
+    @Singleton
+    @Provides
+    @Remote
+    AttributesDataSource provideAttributesRemoteDataSource() {
+        return new AttributesRemoteDataSource();
     }
 
     @Singleton

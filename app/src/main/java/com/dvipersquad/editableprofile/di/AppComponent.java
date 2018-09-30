@@ -3,6 +3,8 @@ package com.dvipersquad.editableprofile.di;
 import android.app.Application;
 
 import com.dvipersquad.editableprofile.EditableProfileApp;
+import com.dvipersquad.editableprofile.data.source.AttributesRepository;
+import com.dvipersquad.editableprofile.data.source.CitiesRepository;
 import com.dvipersquad.editableprofile.data.source.ProfilesRepository;
 import com.dvipersquad.editableprofile.data.source.ProfilesRepositoryModule;
 
@@ -22,6 +24,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
 public interface AppComponent extends AndroidInjector<EditableProfileApp> {
 
     ProfilesRepository getProfilesRepository();
+
+    CitiesRepository getCitiesRepository();
+
+    AttributesRepository getAttributesRepository();
 
     // Enable us to doDaggerAppComponent.builder().application(this).build().inject(this);
     // Includes application in graph

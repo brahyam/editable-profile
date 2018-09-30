@@ -18,6 +18,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        buildTypes.each {
+            it.buildConfigField 'String', 'API_URL', '"http://10.0.2.2:3030/"'
+        }
     }
 }
 
@@ -37,6 +40,8 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+
+    // Database Debugging
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     // Dagger dependencies
