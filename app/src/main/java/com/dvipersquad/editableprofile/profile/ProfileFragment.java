@@ -125,7 +125,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
                 if (getActivity() != null && isActive()) {
                     // Verify storage permissions are granted.
                     if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        presenter.openSelectImageUI();
+                        presenter.showImageSelectionDialog();
                     } else {
                         ActivityCompat.requestPermissions(
                                 getActivity(),
@@ -149,7 +149,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemEditProfile:
-                presenter.openEditProfile();
+                presenter.showEditProfileView();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -267,7 +267,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     }
 
     @Override
-    public void showSelectPictureDialog() {
+    public void showImageSelectionUI() {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickPhoto, REQUEST_SELECT_PICTURE);
@@ -285,7 +285,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
             if (requestCode == REQUEST_SELECT_PICTURE) {
                 Uri selectedImage = data.getData();
                 if (selectedImage != null) {
-                    presenter.imageSelected(getRealPathFromURI(getActivity(), selectedImage));
+                    presenter.onImageSelected(getRealPathFromURI(getActivity(), selectedImage));
                 }
             }
         }

@@ -35,7 +35,7 @@ public class AttributesRemoteDataSource implements AttributesDataSource {
     }
 
     @Override
-    public void getAttributes(@NonNull final GetAttributesCallback callback) {
+    public void getAttributes(@NonNull final LoadAttributesCallback callback) {
         Call<AttributesApiResponse> call = attributesApi.getAttributes();
         call.enqueue(new Callback<AttributesApiResponse>() {
             @Override
@@ -88,7 +88,7 @@ public class AttributesRemoteDataSource implements AttributesDataSource {
     }
 
     @Override
-    public void getAttributesByType(@NonNull String type, GetAttributesCallback callback) {
+    public void getAttributesByType(@NonNull String type, LoadAttributesCallback callback) {
         // Not implemented by remote service
         throw new UnsupportedOperationException();
     }

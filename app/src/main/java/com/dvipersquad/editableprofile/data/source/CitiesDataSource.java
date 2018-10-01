@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CitiesDataSource {
 
-    interface GetCitiesCallback {
+    interface LoadCitiesCallback {
 
         void onCitiesLoaded(List<City> cities);
 
@@ -23,7 +23,7 @@ public interface CitiesDataSource {
         void onDataNotAvailable(String message);
     }
 
-    void getCities(@NonNull GetCitiesCallback callback);
+    void getCities(@NonNull LoadCitiesCallback callback);
 
     void getCity(@NonNull String latitude, @NonNull String longitude, @NonNull GetCityCallback callback);
 

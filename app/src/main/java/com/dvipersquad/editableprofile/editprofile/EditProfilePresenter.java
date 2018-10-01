@@ -96,8 +96,8 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
     }
 
     @Override
-    public void modifyField(final String attributeType) {
-        if (editProfileView == null || !editProfileView.isActive()) {
+    public void showModifyAttributeView(final String attributeType) {
+        if (editProfileView == null || !editProfileView.isActive() || activeProfile == null) {
             return;
         }
         switch (attributeType) {
@@ -147,7 +147,7 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
         if (editProfileView == null || !editProfileView.isActive()) {
             return;
         }
-        citiesRepository.getCities(new CitiesDataSource.GetCitiesCallback() {
+        citiesRepository.getCities(new CitiesDataSource.LoadCitiesCallback() {
             @Override
             public void onCitiesLoaded(List<City> cities) {
                 editProfileView.showEditLocationUI(cities, activeCity);
@@ -164,7 +164,7 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
         if (editProfileView == null || !editProfileView.isActive()) {
             return;
         }
-        attributesRepository.getAttributesByType(attributeType, new AttributesDataSource.GetAttributesCallback() {
+        attributesRepository.getAttributesByType(attributeType, new AttributesDataSource.LoadAttributesCallback() {
             @Override
             public void onAttributesLoaded(List<Attribute> attributes) {
                 editProfileView.showEditSingleChoiceUI(attributes, activeAttributes.get(attributeType), true);
@@ -178,7 +178,7 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
     }
 
     @Override
-    public void attributeSelected(Attribute attribute) {
+    public void onAttributeSelected(Attribute attribute) {
         if (activeProfile == null || attribute == null || editProfileView == null) {
             return;
         }
@@ -224,7 +224,7 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
     }
 
     @Override
-    public void dateSelected(Date date) {
+    public void onDateSelected(Date date) {
         if (editProfileView == null) {
             return;
         }
@@ -236,7 +236,7 @@ public class EditProfilePresenter implements EditProfileContract.Presenter {
     }
 
     @Override
-    public void locationSelected(City city) {
+    public void onLocationSelected(City city) {
         if (editProfileView == null) {
             return;
         }

@@ -23,7 +23,6 @@ public class AttributesRepository implements AttributesDataSource {
 
     boolean attributeCacheIsDirty = false;
 
-
     @Inject
     AttributesRepository(@Remote AttributesDataSource attributesRemoteDataSource, @Local AttributesDataSource attributesLocalDataSource) {
         this.attributesRemoteDataSource = attributesRemoteDataSource;
@@ -31,7 +30,7 @@ public class AttributesRepository implements AttributesDataSource {
     }
 
     @Override
-    public void getAttributes(@NonNull final GetAttributesCallback callback) {
+    public void getAttributes(@NonNull final LoadAttributesCallback callback) {
         if (cachedAttributes != null && !attributeCacheIsDirty) {
             callback.onAttributesLoaded(new ArrayList<>(cachedAttributes.values()));
             return;
@@ -40,7 +39,7 @@ public class AttributesRepository implements AttributesDataSource {
         if (attributeCacheIsDirty) {
             getAttributesFromRemoteDataSource(callback);
         } else {
-            attributesLocalDataSource.getAttributes(new GetAttributesCallback() {
+            attributesLocalDataSource.getAttributes(new LoadAttributesCallback() {
                 @Override
                 public void onAttributesLoaded(List<Attribute> attributes) {
                     refreshAttributesCache(attributes);
@@ -66,8 +65,8 @@ public class AttributesRepository implements AttributesDataSource {
         attributeCacheIsDirty = false;
     }
 
-    private void getAttributesFromRemoteDataSource(final GetAttributesCallback callback) {
-        attributesRemoteDataSource.getAttributes(new GetAttributesCallback() {
+    private void getAttributesFromRemoteDataSource(final LoadAttributesCallback callback) {
+        attributesRemoteDataSource.getAttributes(new LoadAttributesCallback() {
             @Override
             public void onAttributesLoaded(List<Attribute> attributes) {
                 refreshAttributesCache(attributes);
@@ -90,7 +89,7 @@ public class AttributesRepository implements AttributesDataSource {
     }
 
     @Override
-    public void getAttributesByType(@NonNull String type, final GetAttributesCallback callback) {
+    public void getAttributesByType(@NonNull String type, final LoadAttributesCallback callback) {
         if (cachedAttributes != null && !attributeCacheIsDirty) {
             List<Attribute> filteredAttributes = new ArrayList<>();
             for (Attribute attribute : cachedAttributes.values()) {
@@ -159,5 +158,9 @@ public class AttributesRepository implements AttributesDataSource {
             cachedAttributes = new LinkedHashMap<>();
         }
         cachedAttributes.clear();
+    }
+
+    public void refreshAttributes() {
+        attributeCacheIsDirty = true;
     }
 }

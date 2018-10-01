@@ -24,7 +24,7 @@ public class AttributesLocalDataSource implements AttributesDataSource {
     }
 
     @Override
-    public void getAttributes(@NonNull final GetAttributesCallback callback) {
+    public void getAttributes(@NonNull final LoadAttributesCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -46,7 +46,7 @@ public class AttributesLocalDataSource implements AttributesDataSource {
     }
 
     @Override
-    public void getAttributesByType(@NonNull final String type, final GetAttributesCallback callback) {
+    public void getAttributesByType(@NonNull final String type, final LoadAttributesCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

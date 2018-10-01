@@ -119,7 +119,7 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.modifyField(attributeType);
+                presenter.showModifyAttributeView(attributeType);
             }
         };
     }
@@ -224,7 +224,7 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
             dialogBuilder.setSingleChoiceItems(items, selected, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    presenter.attributeSelected(attributes.get(i));
+                    presenter.onAttributeSelected(attributes.get(i));
                     dialogInterface.dismiss();
                 }
             });
@@ -253,7 +253,7 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
                                           int monthOfYear, int dayOfMonth) {
                         Calendar selectedDate = Calendar.getInstance();
                         selectedDate.set(year, monthOfYear, dayOfMonth);
-                        presenter.dateSelected(selectedDate.getTime());
+                        presenter.onDateSelected(selectedDate.getTime());
 
                     }
                 }, year, month, day);
@@ -309,7 +309,7 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
                     public void onClick(View view) {
                         if (!mandatory || !TextUtils.isEmpty(editTxtMain.getText().toString())) {
                             attribute.setName(editTxtMain.getText().toString());
-                            presenter.attributeSelected(attribute);
+                            presenter.onAttributeSelected(attribute);
                             dialog.dismiss();
                         } else {
                             Snackbar.make(getView(), getString(R.string.mandatory_field_error), BaseTransientBottomBar.LENGTH_SHORT).show();
@@ -362,7 +362,7 @@ public class EditProfileFragment extends DaggerFragment implements EditProfileCo
                     @Override
                     public void onClick(View view) {
                         if (selectedCity[0] != null) {
-                            presenter.locationSelected(selectedCity[0]);
+                            presenter.onLocationSelected(selectedCity[0]);
                             dialog.dismiss();
                         } else {
                             Snackbar.make(getView(), getString(R.string.autocomplete_list_selection_error), Snackbar.LENGTH_SHORT).show();

@@ -40,13 +40,13 @@ public interface EditProfileContract {
 
         void takeView(EditProfileContract.View profileFragment);
 
-        void modifyField(String attributeType);
+        void showModifyAttributeView(String attributeType);
 
-        void attributeSelected(Attribute attribute);
+        void onAttributeSelected(Attribute attribute);
 
-        void dateSelected(Date date);
+        void onDateSelected(Date date);
 
-        void locationSelected(City city);
+        void onLocationSelected(City city);
 
         void dropView();
 

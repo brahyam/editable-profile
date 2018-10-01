@@ -32,7 +32,7 @@ public class CitiesRemoteDataSource implements CitiesDataSource {
     }
 
     @Override
-    public void getCities(@NonNull final GetCitiesCallback callback) {
+    public void getCities(@NonNull final LoadCitiesCallback callback) {
         Call<CitiesApiResponse> call = citiesApi.getCities();
         call.enqueue(new Callback<CitiesApiResponse>() {
             @Override

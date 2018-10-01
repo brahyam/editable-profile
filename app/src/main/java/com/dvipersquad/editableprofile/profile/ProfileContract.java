@@ -30,7 +30,7 @@ public interface ProfileContract {
 
         void showEditProfileUI(String profileId);
 
-        void showSelectPictureDialog();
+        void showImageSelectionUI();
 
         boolean isActive();
     }
@@ -39,11 +39,11 @@ public interface ProfileContract {
 
         void takeView(ProfileContract.View profileFragment);
 
-        void openSelectImageUI();
+        void showImageSelectionDialog();
 
-        void imageSelected(String path);
+        void onImageSelected(String path);
 
-        void openEditProfile();
+        void showEditProfileView();
 
         void dropView();
     }

@@ -20,8 +20,6 @@ import javax.inject.Inject;
 
 final class ProfilePresenter implements ProfileContract.Presenter {
 
-    private static final String PROFILE_ID = "c5pQGk6vISfNAPd2";
-
     private ProfilesRepository profilesRepository;
     private CitiesRepository citiesRepository;
     private AttributesRepository attributesRepository;
@@ -77,8 +75,7 @@ final class ProfilePresenter implements ProfileContract.Presenter {
     ProfilePresenter(@Nullable String profileId, ProfilesRepository profilesRepository,
                      CitiesRepository citiesRepository,
                      AttributesRepository attributesRepository) {
-        this.profileId = PROFILE_ID; // Temporarily hardcoded to start the app.
-//        this.profileId = profileId;
+        this.profileId = profileId;
         this.profilesRepository = profilesRepository;
         this.citiesRepository = citiesRepository;
         this.attributesRepository = attributesRepository;
@@ -106,7 +103,7 @@ final class ProfilePresenter implements ProfileContract.Presenter {
                 if (profile != null) {
                     profileView.showProfile(profile);
                     activeProfile = profile;
-                    citiesRepository.getCities(new CitiesDataSource.GetCitiesCallback() {
+                    citiesRepository.getCities(new CitiesDataSource.LoadCitiesCallback() {
                         @Override
                         public void onCitiesLoaded(List<City> cities) {
                             if (profileView == null || !profileView.isActive()) {
@@ -126,7 +123,7 @@ final class ProfilePresenter implements ProfileContract.Presenter {
                             profileView.showErrorMessage(message);
                         }
                     });
-                    attributesRepository.getAttributes(new AttributesDataSource.GetAttributesCallback() {
+                    attributesRepository.getAttributes(new AttributesDataSource.LoadAttributesCallback() {
                         @Override
                         public void onAttributesLoaded(List<Attribute> attributes) {
                             if (profileView == null || !profileView.isActive()) {
@@ -168,14 +165,14 @@ final class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void openSelectImageUI() {
+    public void showImageSelectionDialog() {
         if (profileView != null) {
-            profileView.showSelectPictureDialog();
+            profileView.showImageSelectionUI();
         }
     }
 
     @Override
-    public void imageSelected(final String path) {
+    public void onImageSelected(final String path) {
         profilesRepository.saveProfileImage(path, new ProfilesDataSource.SaveProfileImageCallback() {
             @Override
             public void onProfileImageSaved(String imageUrl) {
@@ -196,7 +193,7 @@ final class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void openEditProfile() {
+    public void showEditProfileView() {
         if (profileView == null || !profileView.isActive()) {
             return;
         }

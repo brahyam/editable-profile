@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.dvipersquad.editableprofile.data.Attribute;
 import com.dvipersquad.editableprofile.data.Profile;
 
 import java.util.LinkedHashMap;
@@ -24,11 +23,8 @@ public class ProfilesRepository implements ProfilesDataSource {
     private final ProfilesDataSource profilesLocalDataSource;
 
     Map<String, Profile> cachedProfiles;
-    Map<String, Attribute> cachedAttributes;
 
-
-    boolean profileCacheIsDirty = false;
-    boolean attributeCacheIsDirty = false;
+    private boolean profileCacheIsDirty = false;
 
 
     @Inject
@@ -40,7 +36,7 @@ public class ProfilesRepository implements ProfilesDataSource {
     /**
      * Gets profile from cache, or local/remote data source if not available
      *
-     * @param profileId hotel Id to search for
+     * @param profileId profile Id to search for
      * @param callback  callback to execute if process is completes/fails
      */
     @Override
@@ -54,30 +50,38 @@ public class ProfilesRepository implements ProfilesDataSource {
             }
         }
 
-        // Try local source
-        profilesLocalDataSource.getProfile(profileId, new GetProfileCallback() {
+        if (profileCacheIsDirty) {
+            getProfileFromRemoteDataSource(profileId, callback);
+        } else {
+            // Try local source
+            profilesLocalDataSource.getProfile(profileId, new GetProfileCallback() {
+                @Override
+                public void onProfileLoaded(Profile profile) {
+                    addProfileToCache(profile);
+                    callback.onProfileLoaded(profile);
+                }
+
+                @Override
+                public void onDataNotAvailable(String message) {
+                    getProfileFromRemoteDataSource(profileId, callback);
+
+                }
+            });
+        }
+    }
+
+    private void getProfileFromRemoteDataSource(String profileId, final GetProfileCallback callback) {
+        profilesRemoteDataSource.getProfile(profileId, new GetProfileCallback() {
             @Override
             public void onProfileLoaded(Profile profile) {
                 addProfileToCache(profile);
+                profilesLocalDataSource.saveProfile(profile, null);
                 callback.onProfileLoaded(profile);
             }
 
             @Override
             public void onDataNotAvailable(String message) {
-                profilesRemoteDataSource.getProfile(profileId, new GetProfileCallback() {
-                    @Override
-                    public void onProfileLoaded(Profile profile) {
-                        addProfileToCache(profile);
-                        profilesLocalDataSource.saveProfile(profile, null);
-                        callback.onProfileLoaded(profile);
-                    }
-
-                    @Override
-                    public void onDataNotAvailable(String message) {
-                        callback.onDataNotAvailable(message);
-                    }
-                });
-
+                callback.onDataNotAvailable(message);
             }
         });
     }
@@ -140,7 +144,7 @@ public class ProfilesRepository implements ProfilesDataSource {
         });
     }
 
-    public void forceRemoteLoading() {
+    public void refreshProfiles() {
         profileCacheIsDirty = true;
     }
 

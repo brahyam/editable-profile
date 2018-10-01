@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AttributesDataSource {
 
-    interface GetAttributesCallback {
+    interface LoadAttributesCallback {
 
         void onAttributesLoaded(List<Attribute> attributes);
 
@@ -23,9 +23,9 @@ public interface AttributesDataSource {
         void onDataNotAvailable(String message);
     }
 
-    void getAttributes(@NonNull GetAttributesCallback callback);
+    void getAttributes(@NonNull LoadAttributesCallback callback);
 
-    void getAttributesByType(@NonNull String type, GetAttributesCallback callback);
+    void getAttributesByType(@NonNull String type, LoadAttributesCallback callback);
 
     void getAttribute(@NonNull String attributeId, @NonNull GetAttributeCallback callback);
 

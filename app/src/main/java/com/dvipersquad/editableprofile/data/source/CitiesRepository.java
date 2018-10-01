@@ -30,7 +30,7 @@ public class CitiesRepository implements CitiesDataSource {
     }
 
     @Override
-    public void getCities(@NonNull final GetCitiesCallback callback) {
+    public void getCities(@NonNull final LoadCitiesCallback callback) {
         if (cachedCities != null && !cityCacheIsDirty) {
             callback.onCitiesLoaded(new ArrayList<>(cachedCities.values()));
             return;
@@ -39,7 +39,7 @@ public class CitiesRepository implements CitiesDataSource {
         if (cityCacheIsDirty) {
             getCitiesFromRemoteDataSource(callback);
         } else {
-            citiesLocalDataSource.getCities(new GetCitiesCallback() {
+            citiesLocalDataSource.getCities(new LoadCitiesCallback() {
                 @Override
                 public void onCitiesLoaded(List<City> cities) {
                     refreshCitiesCache(cities);
@@ -54,6 +54,10 @@ public class CitiesRepository implements CitiesDataSource {
         }
     }
 
+    public void refreshCities() {
+        cityCacheIsDirty = true;
+    }
+
     private void refreshCitiesCache(List<City> cities) {
         if (cachedCities == null) {
             cachedCities = new LinkedHashMap<>();
@@ -65,8 +69,8 @@ public class CitiesRepository implements CitiesDataSource {
         cityCacheIsDirty = false;
     }
 
-    private void getCitiesFromRemoteDataSource(final GetCitiesCallback callback) {
-        citiesRemoteDataSource.getCities(new GetCitiesCallback() {
+    private void getCitiesFromRemoteDataSource(final LoadCitiesCallback callback) {
+        citiesRemoteDataSource.getCities(new LoadCitiesCallback() {
             @Override
             public void onCitiesLoaded(List<City> cities) {
                 refreshCitiesCache(cities);

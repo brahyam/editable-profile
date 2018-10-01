@@ -9,7 +9,7 @@ import com.dvipersquad.editableprofile.data.City;
 import com.dvipersquad.editableprofile.data.Profile;
 
 /**
- * The Room Database that contains the Hotel table.
+ * The Room Database that contains the profiles, attributes and cities tables.
  */
 @Database(entities = {Profile.class, Attribute.class, City.class}, version = 2, exportSchema = false)
 @TypeConverters({Profile.Converters.class})

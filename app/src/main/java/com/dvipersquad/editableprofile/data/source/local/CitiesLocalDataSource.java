@@ -24,7 +24,7 @@ public class CitiesLocalDataSource implements CitiesDataSource {
     }
 
     @Override
-    public void getCities(@NonNull final GetCitiesCallback callback) {
+    public void getCities(@NonNull final LoadCitiesCallback callback) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

@@ -14,13 +14,16 @@ import dagger.android.support.DaggerAppCompatActivity;
  */
 public class ProfileActivity extends DaggerAppCompatActivity {
     public static final String EXTRA_PROFILE_ID = "PROFILE_ID";
+    private static final String PROFILE_ID = "c5pQGk6vISfNAPd2"; //Hardcoded Profile Id to start
 
     @Inject
     ProfileFragment injectedProfileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getIntent().putExtra(EXTRA_PROFILE_ID, PROFILE_ID);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.profile_act);
 
         if (getSupportActionBar() != null) {
