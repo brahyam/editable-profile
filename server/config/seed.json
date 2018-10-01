@@ -1,0 +1,19 @@
+{
+  "displayName": "Brahyam",
+  "realName": "Brahyam Meneses",
+  "profilePictureUrl": "https://static1.businessinsider.de/image/589a1771dd0895cb6e8b4a11-400/slide.jpg",
+  "birthday": "1990-12-30",
+  "genderId": "8f9d76ad-2c6b-4a98-8496-6165a2770a5e",
+  "ethnicityId": "b26ce72d-99c5-4be9-8415-3155f43ec938",
+  "religionId": "2601e45e-b70f-43e3-8364-205794b439e6",
+  "height": "174.0",
+  "figureId": "b5e4720e-bc9a-4e56-a301-31a6f667adc2",
+  "maritalStatusId": "5a837767-7a11-487c-a243-7451c7b14c03",
+  "occupation": "Engineer",
+  "aboutMe": "No description",
+  "location": {
+    "lat": "31°12'N",
+    "lon": "29°55'E"
+  },
+  "_id": "c5pQGk6vISfNAPd2"
+}

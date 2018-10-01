@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#00a5db</color>
+    <color name="colorPrimaryDark">#008cb7</color>
+    <color name="colorAccent">#757575</color>
+    <color name="colorProfilePictureOverlay">#5000</color>
+    <color name="colorProfileTitleText">#FFF</color>
+    <color name="editProfilePictureButtonBackground">#5000</color>
+    <color name="colorEditProfilePictureButton">#FFF</color>
+    <color name="colorProfileAttributeText">#000</color>
+    <color name="colorProfileSeparator">#F5F5F5</color>
+    <color name="colorEditProfileLabelBackground">#F5F5F5</color>
+    <color name="colorEditProfileLabelText">#000</color>
+    <color name="colorEditProfileValueText">#828282</color>
+    <color name="editProfileValueButtonBackground">@android:color/transparent</color>
+    <color name="colorAlertText">#D30C47</color>
+    <color name="colorProfileAttributeIcon">#828282</color>
 </resources>

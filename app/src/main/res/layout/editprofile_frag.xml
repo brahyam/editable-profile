@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtEditProfileInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/mandatory_fields"
+            android:textColor="@color/colorEditProfileValueText"
+            android:padding="@dimen/element_default_half_margin" />
+
+        <TextView
+            android:id="@+id/txtEditProfileRealNameLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/real_name_label"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileInfo" />
+
+        <Button
+            android:id="@+id/btnEditProfileRealName"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_display_name"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileRealNameLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileDisplayNameLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/display_name_label"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileRealName" />
+
+        <Button
+            android:id="@+id/btnEditProfileDisplayName"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_display_name"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileDisplayNameLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileGenderLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gender_label"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileDisplayName" />
+
+        <Button
+            android:id="@+id/btnEditProfileGender"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_gender"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileGenderLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileHeightLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/height"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileGender" />
+
+        <Button
+            android:id="@+id/btnEditProfileHeight"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_edit_height"
+            android:drawableEnd="@null"
+            android:enabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileHeightLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileBirthdayLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/birthday_label"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileHeight" />
+
+        <Button
+            android:id="@+id/btnEditProfileBirthday"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_birthday"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileBirthdayLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileLocationLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/location_label"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileBirthday" />
+
+        <Button
+            android:id="@+id/btnEditProfileLocation"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_edit_location"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileLocationLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileMaritalStatusLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/marital_status_label"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileLocation" />
+
+        <Button
+            android:id="@+id/btnEditProfileMaritalStatus"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_marital_status"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileMaritalStatusLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileReligionLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/religion"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileMaritalStatus" />
+
+        <Button
+            android:id="@+id/btnEditProfileReligion"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_religion"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileReligionLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileEthnicityLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ethnicity"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileReligion" />
+
+        <Button
+            android:id="@+id/btnEditProfileEthnicity"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_ethnicity"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileEthnicityLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileFigureLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/figure"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileEthnicity" />
+
+        <Button
+            android:id="@+id/btnEditProfileFigure"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_figure"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileFigureLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileOccupationLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/occupation"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileFigure" />
+
+        <Button
+            android:id="@+id/btnEditProfileOccupation"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_occupation"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileOccupationLabel" />
+
+        <TextView
+            android:id="@+id/txtEditProfileAboutMeLabel"
+            style="@style/EditProfileLabelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_me"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditProfileOccupation" />
+
+        <Button
+            android:id="@+id/btnEditProfileAboutMe"
+            style="@style/EditProfileValueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_about_me"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditProfileAboutMeLabel" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

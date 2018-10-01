@@ -16,6 +16,12 @@ const services = require('./services');
 const appHooks = require('./app.hooks');
 const channels = require('./channels');
 
+var multer  = require('multer')
+
+var upload = multer({ dest: 'public/profileImages' })
+
+const seedData = require('../config/seed.json');
+
 const app = express(feathers());
 
 // Load app configuration
@@ -29,6 +35,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', express.static(app.get('public')));
+
+app.post('/upload', upload.single('profileImage'), function (req, res, next) {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+    console.log(req.file);
+    res.send({ fieldName:req.file.fieldname, originalName:req.file.originalname, fileName: req.file.filename });
+  })
 
 // Set up Plugins and providers
 app.configure(express.rest());
@@ -46,5 +59,8 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
+
+// Seed Data
+app.service('profiles').create(seedData)
 
 module.exports = app;

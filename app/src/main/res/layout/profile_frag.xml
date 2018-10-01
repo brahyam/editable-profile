@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgProfilePicture"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/profile_picture_height"
+            android:scaleType="fitXY"
+            android:background="@color/colorPrimary"
+            android:contentDescription="@string/profile_picture_description" />
+
+        <View
+            android:id="@+id/viewProfilePictureOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/profile_picture_height"
+            android:background="@color/colorProfilePictureOverlay" />
+
+        <TextView
+            android:id="@+id/txtProfileDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/element_default_margin"
+            android:text="@string/dummy_display_name"
+            android:textColor="@color/colorProfileTitleText"
+            android:textSize="@dimen/profile_title_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintBottom_toBottomOf="@id/imgProfilePicture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnEditProfilePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_edit_profile_picture_background"
+            android:drawableStart="@drawable/ic_camera_alt_black_24dp"
+            android:drawableTint="@color/colorEditProfilePictureButton"
+            android:minHeight="@dimen/edit_profile_picture_button_min_height"
+            android:minWidth="@dimen/edit_profile_picture_button_min_width"
+            android:text="@string/edit"
+            android:textAllCaps="false"
+            android:textColor="@color/colorEditProfilePictureButton"
+            android:textSize="@dimen/edit_profile_picture_button_text"
+            app:layout_constraintTop_toTopOf="@+id/imgProfilePicture"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/txtProfileGender"
+            style="@style/ProfileAttributeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_gender_black_24dp"
+            android:text="@string/dummy_gender"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgProfilePicture" />
+
+        <TextView
+            android:id="@+id/txtProfileHeight"
+            style="@style/ProfileAttributeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_height_top_black_24dp"
+            android:text="@string/dummy_height"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtProfileGender" />
+
+        <TextView
+            android:id="@+id/txtProfileAge"
+            style="@style/ProfileAttributeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_cake_black_24dp"
+            android:text="@string/dummy_user_age"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtProfileHeight" />
+
+        <TextView
+            android:id="@+id/txtProfileLocation"
+            style="@style/ProfileAttributeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_location_on_black_24dp"
+            android:text="@string/dummy_location"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtProfileAge" />
+
+        <TextView
+            android:id="@+id/txtProfileReligion"
+            style="@style/ProfileAttributeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_religion_black_24dp"
+            android:text="@string/dummy_religion"
+            app:layout_constraintBaseline_toBaselineOf="@id/txtProfileHeight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+        <TextView
+            android:id="@+id/txtProfileEthnicity"
+            style="@style/ProfileAttributeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_ethnicity_black_24dp"
+            android:text="@string/dummy_ethnicity"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtProfileAge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+        <TextView
+            android:id="@+id/txtProfileFigure"
+            style="@style/ProfileAttributeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_figure_black_24dp"
+            android:text="@string/dummy_figure"
+            app:layout_constraintBaseline_toBaselineOf="@id/txtProfileLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+        <TextView
+            android:id="@+id/txtProfileAboutMeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/element_default_margin"
+            android:background="@color/colorProfileSeparator"
+            android:paddingEnd="@dimen/element_default_margin"
+            android:paddingStart="@dimen/element_default_margin"
+            android:text="@string/about_me"
+            android:textSize="@dimen/profile_label_text"
+            app:layout_constraintTop_toBottomOf="@id/txtProfileLocation" />
+
+        <TextView
+            android:id="@+id/txtProfileAboutMe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/element_default_margin"
+            android:layout_marginStart="@dimen/element_default_margin"
+            android:layout_marginTop="@dimen/element_default_margin"
+            android:text="@string/dummy_about_me"
+            android:textColor="@color/colorProfileAttributeText"
+            android:textSize="@dimen/profile_about_me_text"
+            app:layout_constraintTop_toBottomOf="@+id/txtProfileAboutMeLabel" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
