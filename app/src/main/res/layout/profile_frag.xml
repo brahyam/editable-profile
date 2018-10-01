@@ -30,6 +30,8 @@
             android:text="@string/dummy_display_name"
             android:textColor="@color/colorProfileTitleText"
             android:textSize="@dimen/profile_title_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintBottom_toBottomOf="@id/imgProfilePicture"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -38,16 +40,16 @@
             android:id="@+id/btnEditProfilePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/editProfilePictureButton"
+            android:background="@drawable/btn_edit_profile_picture_background"
             android:drawableStart="@drawable/ic_camera_alt_black_24dp"
             android:drawableTint="@color/colorEditProfilePictureButton"
-            android:minHeight="25dp"
-            android:minWidth="50dp"
+            android:minHeight="@dimen/edit_profile_picture_button_min_height"
+            android:minWidth="@dimen/edit_profile_picture_button_min_width"
             android:text="@string/edit"
             android:textAllCaps="false"
             android:textColor="@color/colorEditProfilePictureButton"
             android:textSize="@dimen/edit_profile_picture_button_text"
-            app:layout_constraintBottom_toBottomOf="@+id/imgProfilePicture"
+            app:layout_constraintTop_toTopOf="@+id/imgProfilePicture"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView

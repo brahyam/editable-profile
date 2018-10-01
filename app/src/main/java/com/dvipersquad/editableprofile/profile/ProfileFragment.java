@@ -127,11 +127,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
                     if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         presenter.showImageSelectionDialog();
                     } else {
-                        ActivityCompat.requestPermissions(
-                                getActivity(),
-                                PERMISSIONS_STORAGE,
-                                REQUEST_EXTERNAL_STORAGE
-                        );
+                        requestPermissions(PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
                     }
                 }
             }
@@ -288,6 +284,18 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
                     presenter.onImageSelected(getRealPathFromURI(getActivity(), selectedImage));
                 }
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.showImageSelectionDialog();
+                }
+                break;
         }
     }
 
