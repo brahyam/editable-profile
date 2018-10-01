@@ -8,11 +8,15 @@ import com.dvipersquad.editableprofile.BuildConfig;
 import com.dvipersquad.editableprofile.data.Profile;
 import com.dvipersquad.editableprofile.data.source.ProfilesDataSource;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Singleton;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,8 +26,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 @Singleton
@@ -111,6 +117,40 @@ public class ProfilesRemoteDataSource implements ProfilesDataSource {
         executeProfileModificationCall(call, callback);
     }
 
+    @Override
+    public void saveProfileImage(@NonNull String imageUrl, @Nullable final SaveProfileImageCallback callback) {
+        File file = new File(imageUrl);
+        final RequestBody reqFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("profileImage", file.getName(), reqFile);
+//        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), new Gson().toJson(new ChangeLogoParams()));
+        Call<ProfileImageApiResponse> call = profilesApi.saveProfileImage(body);
+        call.enqueue(new Callback<ProfileImageApiResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ProfileImageApiResponse> call, @NonNull Response<ProfileImageApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (callback != null) {
+                        String imageUrl = BuildConfig.API_URL + "profileImages/" + response.body().getFileName();
+                        callback.onProfileImageSaved(imageUrl);
+                    }
+                } else {
+                    Log.e(TAG, response.message());
+                    if (callback != null) {
+                        callback.onOperationFailed(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ProfileImageApiResponse> call, @NonNull Throwable t) {
+                Log.e(TAG, t.getMessage());
+                if (callback != null) {
+                    callback.onOperationFailed(t.getLocalizedMessage());
+                }
+            }
+        });
+
+    }
+
     private void executeProfileModificationCall(Call<Profile> call, final ModifyProfileCallback callback) {
         call.enqueue(new Callback<Profile>() {
             @Override
@@ -148,5 +188,9 @@ public class ProfilesRemoteDataSource implements ProfilesDataSource {
 
         @DELETE("profiles/{id}")
         Call<Profile> deleteProfile(@Path("id") String profileId);
+
+        @Multipart
+        @POST("upload")
+        Call<ProfileImageApiResponse> saveProfileImage(@Part MultipartBody.Part image);
     }
 }

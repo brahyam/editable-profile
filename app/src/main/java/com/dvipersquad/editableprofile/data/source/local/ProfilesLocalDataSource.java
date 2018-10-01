@@ -109,5 +109,11 @@ public class ProfilesLocalDataSource implements ProfilesDataSource {
         appExecutors.diskIO().execute(saveRunnable);
     }
 
+    @Override
+    public void saveProfileImage(@NonNull String imageUrl, @Nullable SaveProfileImageCallback callback) {
+        // only implemented by remote service
+        throw new UnsupportedOperationException();
+    }
+
 
 }

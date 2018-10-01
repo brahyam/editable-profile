@@ -32,6 +32,8 @@ final class ProfilePresenter implements ProfileContract.Presenter {
     @Nullable
     private String profileId;
 
+    private Profile activeProfile;
+
     private AttributesDataSource.GetAttributeCallback getAttributeCallback =
             new AttributesDataSource.GetAttributeCallback() {
         @Override
@@ -103,6 +105,7 @@ final class ProfilePresenter implements ProfileContract.Presenter {
                 profileView.setLoadingIndicator(false);
                 if (profile != null) {
                     profileView.showProfile(profile);
+                    activeProfile = profile;
                     citiesRepository.getCities(new CitiesDataSource.GetCitiesCallback() {
                         @Override
                         public void onCitiesLoaded(List<City> cities) {
@@ -162,6 +165,34 @@ final class ProfilePresenter implements ProfileContract.Presenter {
     public void takeView(ProfileContract.View profileFragment) {
         profileView = profileFragment;
         loadProfile();
+    }
+
+    @Override
+    public void openSelectImageUI() {
+        if (profileView != null) {
+            profileView.showSelectPictureDialog();
+        }
+    }
+
+    @Override
+    public void imageSelected(final String path) {
+        profilesRepository.saveProfileImage(path, new ProfilesDataSource.SaveProfileImageCallback() {
+            @Override
+            public void onProfileImageSaved(String imageUrl) {
+                if (activeProfile != null && profileView != null) {
+                    activeProfile.setProfilePictureUrl(imageUrl);
+                    profilesRepository.updateProfile(activeProfile, null);
+                    profileView.showProfileImage(imageUrl);
+                }
+            }
+
+            @Override
+            public void onOperationFailed(String message) {
+                if (profileView != null) {
+                    profileView.showErrorMessage(message);
+                }
+            }
+        });
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.dvipersquad.editableprofile.data.source;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.dvipersquad.editableprofile.data.Attribute;
 import com.dvipersquad.editableprofile.data.Profile;
@@ -160,6 +161,29 @@ public class ProfilesRepository implements ProfilesDataSource {
             @Override
             public void onOperationFailed(String message) {
                 callback.onOperationFailed(message);
+            }
+        });
+    }
+
+    @Override
+    public void saveProfileImage(@NonNull final String imagePath, @Nullable final SaveProfileImageCallback callback) {
+        // Only uses remote service
+        profilesRemoteDataSource.saveProfileImage(imagePath, new SaveProfileImageCallback() {
+            @Override
+            public void onProfileImageSaved(String imageUrl) {
+                if (!TextUtils.isEmpty(imageUrl) && callback != null) {
+                    callback.onProfileImageSaved(imageUrl);
+                } else if (callback != null) {
+                    callback.onOperationFailed(null);
+                }
+            }
+
+            @Override
+            public void onOperationFailed(String message) {
+                // If remote operation failed do nothing
+                if (callback != null) {
+                    callback.onOperationFailed(message);
+                }
             }
         });
     }

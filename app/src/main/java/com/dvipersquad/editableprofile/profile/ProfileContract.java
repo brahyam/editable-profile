@@ -18,6 +18,8 @@ public interface ProfileContract {
 
         void showProfile(Profile profile);
 
+        void showProfileImage(String imageUrl);
+
         void showCity(String cityName);
 
         void showAttributes(List<Attribute> attributes);
@@ -28,12 +30,18 @@ public interface ProfileContract {
 
         void showEditProfileUI(String profileId);
 
+        void showSelectPictureDialog();
+
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter<View> {
 
         void takeView(ProfileContract.View profileFragment);
+
+        void openSelectImageUI();
+
+        void imageSelected(String path);
 
         void openEditProfile();
 

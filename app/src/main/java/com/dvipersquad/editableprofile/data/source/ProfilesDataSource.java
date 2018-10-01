@@ -30,4 +30,13 @@ public interface ProfilesDataSource {
     void updateProfile(@NonNull Profile profile, @Nullable ModifyProfileCallback callback);
 
     void deleteProfile(@NonNull String profileId, @Nullable ModifyProfileCallback callback);
+
+    interface SaveProfileImageCallback {
+
+        void onProfileImageSaved(String imageUrl);
+
+        void onOperationFailed(String message);
+    }
+
+    void saveProfileImage(@NonNull String imageUrl, @Nullable SaveProfileImageCallback callback);
 }

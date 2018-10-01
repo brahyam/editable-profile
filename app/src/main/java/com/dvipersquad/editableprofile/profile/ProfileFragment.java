@@ -1,11 +1,20 @@
 package com.dvipersquad.editableprofile.profile;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +50,14 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     @NonNull
     private static final String ARGUMENT_PROFILE_ID = "PROFILE_ID";
     private static final String ELLIPSIS = "...";
+    private static final int REQUEST_SELECT_PICTURE = 100;
+    private static final String TAG = ProfileFragment.class.getSimpleName();
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
 
     @Inject
     @Nullable
@@ -87,7 +104,7 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.profile_frag, container, false);
         imgProfilePicture = root.findViewById(R.id.imgProfilePicture);
 
@@ -102,8 +119,23 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
         txtProfileAboutMe = root.findViewById(R.id.txtProfileAboutMe);
 
         btnEditProfilePicture = root.findViewById(R.id.btnEditProfilePicture);
-
-
+        btnEditProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() != null && isActive()) {
+                    // Verify storage permissions are granted.
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        presenter.openSelectImageUI();
+                    } else {
+                        ActivityCompat.requestPermissions(
+                                getActivity(),
+                                PERMISSIONS_STORAGE,
+                                REQUEST_EXTERNAL_STORAGE
+                        );
+                    }
+                }
+            }
+        });
         return root;
     }
 
@@ -147,16 +179,21 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
         txtProfileHeight.setText(String.format(Locale.getDefault(), "%.0f cms %s", profile.getHeight(), getString(R.string.tall)));
         txtProfileAge.setText(String.format(Locale.getDefault(), "%d %s", getAgeFromDate(profile.getBirthday()), getString(R.string.years_old)));
         txtProfileAboutMe.setText(profile.getAboutMe());
-        btnEditProfilePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.openEditProfile();
-            }
-        });
 
         if (!TextUtils.isEmpty(profile.getProfilePictureUrl())) {
             Picasso.get()
                     .load(profile.getProfilePictureUrl())
+                    .fit()
+                    .centerCrop()
+                    .into(imgProfilePicture);
+        }
+    }
+
+    @Override
+    public void showProfileImage(String imageUrl) {
+        if (!TextUtils.isEmpty(imageUrl)) {
+            Picasso.get()
+                    .load(imageUrl)
                     .fit()
                     .centerCrop()
                     .into(imgProfilePicture);
@@ -204,7 +241,15 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
 
     @Override
     public void showMissingProfile() {
-
+        txtProfileDisplayName.setText(getString(R.string.error_loading_profile));
+        txtProfileGender.setText(ELLIPSIS);
+        txtProfileHeight.setText(ELLIPSIS);
+        txtProfileAge.setText(ELLIPSIS);
+        txtProfileLocation.setText(ELLIPSIS);
+        txtProfileReligion.setText(ELLIPSIS);
+        txtProfileEthnicity.setText(ELLIPSIS);
+        txtProfileFigure.setText(ELLIPSIS);
+        txtProfileAboutMe.setText(ELLIPSIS);
     }
 
     @Override
@@ -222,7 +267,45 @@ public class ProfileFragment extends DaggerFragment implements ProfileContract.V
     }
 
     @Override
+    public void showSelectPictureDialog() {
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto, REQUEST_SELECT_PICTURE);
+    }
+
+    @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (requestCode == REQUEST_SELECT_PICTURE) {
+                Uri selectedImage = data.getData();
+                if (selectedImage != null) {
+                    presenter.imageSelected(getRealPathFromURI(getActivity(), selectedImage));
+                }
+            }
+        }
+    }
+
+    private String getRealPathFromURI(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+            Log.e(TAG, "getRealPathFromURI Exception : " + e.toString());
+            return "";
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 }
